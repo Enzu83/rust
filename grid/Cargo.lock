@@ -3,13 +3,5 @@
 version = 4
 
 [[package]]
-name = "example"
-version = "0.1.0"
-
-[[package]]
-name = "graph"
-version = "0.1.0"
-
-[[package]]
 name = "grid"
 version = "0.1.0"

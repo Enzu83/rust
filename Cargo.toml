@@ -1,7 +1,0 @@
-[workspace]
-members = [
-    "example",
-    "graph",
-    "grid",
-]
-resolver = "3"
