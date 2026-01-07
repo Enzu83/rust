@@ -1,0 +1,9 @@
+[package]
+name = "window-renderer"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.100"
+pixels = "0.13.0"
+winit = "0.28.7"
