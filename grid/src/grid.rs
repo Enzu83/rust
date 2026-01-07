@@ -1,4 +1,4 @@
-use std::ops::{Index, IndexMut};
+use std::error::Error;
 
 pub struct Grid<T> {
     data: Vec<T>,
@@ -37,7 +37,7 @@ where
         i * self.cols() + j
     }
 
-    pub fn set(&mut self, i: usize, j: usize, val: T) -> Result<(), Box<dyn std::error::Error>> {
+    pub fn set(&mut self, i: usize, j: usize, val: T) -> Result<(), Box<dyn Error>> {
         if !self.in_bounds(i, j) {
             return Err(format!("Out of bounds index {:?}, should be less than {:?}", (i, j), self.size).into());
         }
@@ -52,27 +52,9 @@ where
         let pos = self.to_pos(i, j);
         self.data.get(pos)
     }
-}
 
-impl<T> Index<(usize, usize)> for Grid<T>
-where 
-    T: Default + Clone
-{
-    type Output = T;
-
-    fn index(&self, pos: (usize, usize)) -> &Self::Output {
-        let pos = self.to_pos(pos.0, pos.1);
-        &self.data[pos]
-    }
-}
-
-impl<T> IndexMut<(usize, usize)> for Grid<T>
-where 
-    T: Default + Clone
-{
-    fn index_mut(&mut self, pos: (usize, usize)) -> &mut Self::Output {
-        let pos = self.to_pos(pos.0, pos.1);
-        &mut self.data[pos]
+    pub fn fill(&mut self, val: T) {
+        self.data.fill(val);
     }
 }
 
@@ -108,12 +90,5 @@ mod test {
         // out of bounds
         grid.set(6, 2, 1).expect_err("");
         grid.set(2, 6, 1).expect_err("");
-    }
-
-    #[test]
-    fn set_and_get_value_with_indexes() {
-        let mut grid: Grid<i32> = Grid::new(3, 3);
-        grid[(2, 1)] = 7;
-        assert_eq!(grid[(2, 1)], 7);
     }
 }
